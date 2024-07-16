@@ -1,7 +1,11 @@
 import logo from './logo.svg';
 import './App.css';
 
-function App() {
+export const App = () => {
+  // currentYear - декларативный
+  const currentYear = new Date().getFullYear()
+
+  // jsx - декларативный
   return (
     <div className="App">
       <header className="App-header">
@@ -17,9 +21,10 @@ function App() {
         >
           Learn React
         </a>
+        <i>Текущий год: {currentYear}</i>
       </header>
     </div>
   );
-}
+};
 
-export default App;
+
