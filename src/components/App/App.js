@@ -4,10 +4,11 @@ import './App.css';
 export const App = () => {
   // currentYear - декларативный
   const currentYear = new Date().getFullYear()
+  let isDark = true
 
   // jsx - декларативный
   return (
-    <div className="App">
+    <div className={`${isDark ? 'dark' : 'light'} App`}>
       <header className="App-header">
         <img src={logo} className="App-logo" alt="logo" />
         <p>
