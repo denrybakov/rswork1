@@ -1,0 +1,47 @@
+body {
+	background-color: #000000;
+	color: white;
+}
+.app {
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	min-height: 100vh;
+}
+
+.label {
+	display: flex;
+	justify-content: end;
+	font-size: 48px;
+	font-weight: 400;
+	margin-bottom: 20px;
+}
+
+.label.result {
+	color: #f79f0e;
+}
+
+.calcNum {
+	width: 280px;
+	display: inline-flex;
+	/* flex-direction: column; */
+}
+
+.opr {
+	display: inline-flex;
+	flex-direction: column;
+}
+
+.btnC {
+	background-color: #f79f0e;
+	font-size: 26px;
+}
+
+.btnOpr {
+	background-color: #f79f0e;
+}
+
+.btnOpr:hover,
+.btnC:hover {
+	background-color: #c07908;
+}
