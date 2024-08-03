@@ -41,13 +41,13 @@ export const Form = () => {
   const password = watch('password');
   const passwordRepeat = watch('passwordRepeat');
 
-  const isValid = !errors.email && !errors.password && !errors.passwordRepeat && email && password && passwordRepeat;
+  const isValid = !errors.email && !errors.password && !errors.passwordRepeat && email &&
+    password && passwordRepeat
 
 
   useEffect(() => {
     if (isValid) {
       refBtn.current.focus();
-
     }
   }, [isValid])
 
@@ -58,7 +58,7 @@ export const Form = () => {
 
   return (
     <form className={styles.form} onSubmit={handleSubmit(onSubmit)}>
-      <h2>Обычная форма</h2>
+      <h2>React hook form and Yup</h2>
 
       <input
         type="email"
