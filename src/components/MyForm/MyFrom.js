@@ -16,14 +16,13 @@ export const MyForm = () => {
     emtyForm
   } = getStore()
 
-  let isValid = email && password && passwordRepeat && !emailErrors.parseEmail &&
+  let isValid = email && password && passwordRepeat && password === passwordRepeat && !emailErrors.parseEmail &&
     !emailErrors.minSym && !emailErrors.maxSym && !passwordErrors.parsePass &&
     !passwordErrors.minSym && !passwordErrors.maxSym && !passwordRepeatErrors.passwordsErr
 
   useEffect(() => {
     if (isValid) {
       refBtn.current.focus();
-
     }
   }, [isValid])
 
@@ -77,26 +76,12 @@ export const MyForm = () => {
       : setStore('passwordRepeatErrors', {})
   }
 
-  const onChangeRepeatPass = (inputValue) => {
-    setStore('passwordRepeat', inputValue)
-    const isFormValid = email && password && inputValue && !emailErrors.parseEmail &&
-      !emailErrors.minSym && !emailErrors.maxSym && !passwordErrors.parsePass &&
-      !passwordErrors.minSym && !passwordErrors.maxSym && inputValue === password;
-
-    if (isFormValid) {
-      refBtn.current.focus()
-    }
-
-  }
-
   const onBlurPasswordRepeatInput = () => {
     if (passwordRepeat !== password) {
       setStore('passwordRepeatErrors', { passwordsErr: 'Пароли не совпадают' })
     } else {
       setStore('passwordRepeatErrors', {})
     }
-
-
   }
 
   return (
@@ -104,7 +89,6 @@ export const MyForm = () => {
       <h2>Обычная форма</h2>
 
       <input
-
         type="email"
         placeholder={'Введите email'}
         className={styles.email}
@@ -135,7 +119,8 @@ export const MyForm = () => {
         placeholder={'Повторите пароль'}
         className={styles.pass}
         value={passwordRepeat}
-        onChange={(e) => onChangeRepeatPass(e.target.value)}
+        name={'passwordRepeat'}
+        onChange={({ target }) => setStore(target.name, target.value)}
         onBlur={onBlurPasswordRepeatInput}
       />
       {passwordRepeat && passwordRepeatErrors.passwordsErr && <span className={styles.errorSpan}>{'Не совпадают пароли'}</span>}

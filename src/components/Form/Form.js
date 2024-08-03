@@ -42,8 +42,7 @@ export const Form = () => {
   const passwordRepeat = watch('passwordRepeat');
 
   const isValid = !errors.email && !errors.password && !errors.passwordRepeat && email &&
-    password && passwordRepeat
-
+    password && passwordRepeat && password === passwordRepeat
 
   useEffect(() => {
     if (isValid) {
