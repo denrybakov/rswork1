@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect, useRef } from 'react';
 import { useForm } from 'react-hook-form';
 import { yupResolver } from '@hookform/resolvers/yup';
 import * as yup from 'yup';
@@ -24,7 +24,7 @@ const schema = yup.object().shape({
 });
 
 export const Form = () => {
-  const { register, handleSubmit, formState: { errors }, reset } = useForm({
+  const { register, handleSubmit, formState: { errors }, reset, watch } = useForm({
     defaultValues: {
       email: '',
       password: '',
@@ -35,7 +35,21 @@ export const Form = () => {
     reValidateMode: 'onChange',
   })
 
-  const isValid = !errors.email && !errors.password && !errors.passwordRepeat
+  const refBtn = useRef(null);
+
+  const email = watch('email');
+  const password = watch('password');
+  const passwordRepeat = watch('passwordRepeat');
+
+  const isValid = !errors.email && !errors.password && !errors.passwordRepeat && email && password && passwordRepeat;
+
+
+  useEffect(() => {
+    if (isValid) {
+      refBtn.current.focus();
+
+    }
+  }, [isValid])
 
   const onSubmit = (data) => {
     console.log(data);
@@ -70,7 +84,7 @@ export const Form = () => {
       />
       {errors.passwordRepeat && <span className={styles.errorSpan}>{errors.passwordRepeat.message}</span>}
 
-      <button type="submit" disabled={!isValid}>Зарегистрироваться</button>
+      <button type="submit" disabled={!isValid} ref={refBtn}>Зарегистрироваться</button>
     </form>
   );
 };

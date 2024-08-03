@@ -1,8 +1,10 @@
+import { useRef } from 'react'
 import { useStore } from '../../store/store'
 import { isValidEmail, isValidPass } from '../helper'
 import styles from './MyForm.module.css'
 
 export const MyForm = () => {
+  const refBtn = useRef(null)
   const { getStore, setStore, resetStore } = useStore()
   const {
     email,
@@ -14,7 +16,7 @@ export const MyForm = () => {
     emtyForm
   } = getStore()
 
-  const isValid = email && password && passwordRepeat && !emailErrors.parseEmail &&
+  let isValid = email && password && passwordRepeat && !emailErrors.parseEmail &&
     !emailErrors.minSym && !emailErrors.maxSym && !passwordErrors.parsePass &&
     !passwordErrors.minSym && !passwordErrors.maxSym && !passwordRepeatErrors.passwordsErr
 
@@ -66,12 +68,30 @@ export const MyForm = () => {
       ? setStore('passwordRepeatErrors', { passwordsErr: 'Пароли не совпадают' })
       : setStore('passwordRepeatErrors', {})
 
+
+  }
+
+  const onChangeRepeatPass = (inputValue) => {
+    setStore('passwordRepeat', inputValue)
+    const isFormValid = email && password && inputValue && !emailErrors.parseEmail &&
+      !emailErrors.minSym && !emailErrors.maxSym && !passwordErrors.parsePass &&
+      !passwordErrors.minSym && !passwordErrors.maxSym && inputValue === password;
+
+    if (isFormValid) {
+      refBtn.current.focus()
+    }
+
   }
 
   const onBlurPasswordRepeatInput = () => {
-    passwordRepeat !== password
-      ? setStore('passwordRepeatErrors', { passwordsErr: 'Пароли не совпадают' })
-      : setStore('passwordRepeatErrors', {})
+    if (passwordRepeat !== password) {
+      setStore('passwordRepeatErrors', { passwordsErr: 'Пароли не совпадают' })
+    } else {
+      setStore('passwordRepeatErrors', {})
+      refBtn.current.focus();
+    }
+
+
   }
 
   return (
@@ -79,6 +99,7 @@ export const MyForm = () => {
       <h2>Обычная форма</h2>
 
       <input
+
         type="email"
         placeholder={'Введите email'}
         className={styles.email}
@@ -109,12 +130,12 @@ export const MyForm = () => {
         placeholder={'Повторите пароль'}
         className={styles.pass}
         value={passwordRepeat}
-        onChange={(e) => setStore('passwordRepeat', e.target.value)}
+        onChange={(e) => onChangeRepeatPass(e.target.value)}
         onBlur={onBlurPasswordRepeatInput}
       />
       {passwordRepeat && passwordRepeatErrors.passwordsErr && <span className={styles.errorSpan}>{'Не совпадают пароли'}</span>}
 
-      <button type="submit" disabled={!isValid}>Зарегистрироваться</button>
+      <button type="submit" ref={refBtn} disabled={!isValid} >Зарегистрироваться</button>
       {emtyForm && <div className={styles.errorForm}>Форма пустая </div>}
     </form>
   )
