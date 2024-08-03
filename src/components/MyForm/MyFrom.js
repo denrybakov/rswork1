@@ -16,7 +16,7 @@ export const MyForm = () => {
     emtyForm
   } = getStore()
 
-  let isValid = email && password && passwordRepeat && password === passwordRepeat &&
+  const isValid = email && password && passwordRepeat && password === passwordRepeat &&
     !emailErrors.parseEmail && !emailErrors.minSym && !emailErrors.maxSym &&
     !passwordErrors.parsePass && !passwordErrors.minSym &&
     !passwordErrors.maxSym && !passwordRepeatErrors.passwordsErr
@@ -27,14 +27,13 @@ export const MyForm = () => {
     }
   }, [isValid])
 
-
   const sendFormData = (dataForm) => {
     console.log(dataForm);
   }
 
   const onSubmit = (e) => {
     e.preventDefault();
-    if (email && password && passwordRepeat) {
+    if (isValid) {
       sendFormData({ email, password, passwordRepeat });
       resetStore();
       return;
