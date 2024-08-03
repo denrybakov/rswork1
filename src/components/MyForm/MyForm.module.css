@@ -1,0 +1,40 @@
+.myForm {
+	display: flex;
+	flex-direction: column;
+	padding: 40px;
+	background-color: white;
+	width: 30%;
+	min-width: 300px;
+	padding-top: 15px;
+}
+
+h2 {
+	margin-bottom: 40px;
+	font-weight: 500;
+}
+
+.myForm > h2 {
+	color: #4835d4;
+}
+
+.myForm > button {
+	background-color: #4835d4;
+	color: white;
+}
+
+.error {
+	border-bottom: 1px solid tomato;
+	color: tomato !important;
+}
+
+.errorSpan {
+	font-size: 10px;
+	color: tomato !important;
+}
+
+.errorForm {
+	margin-top: 10px;
+	font-size: 13px;
+	color: tomato !important;
+	text-align: center;
+}

@@ -1,0 +1,39 @@
+.form {
+	display: flex;
+	flex-direction: column;
+	padding: 40px;
+	background-color: #4835d4;
+	width: 30%;
+	min-width: 300px;
+	padding-top: 15px;
+}
+
+.form > h2 {
+	color: white;
+}
+
+.form > input {
+	color: white;
+}
+
+.form > input:hover {
+	border-bottom: 1px solid white;
+}
+
+.form > input::placeholder {
+	color: white;
+}
+
+.form > button {
+	color: #4835d4;
+}
+
+.errorSpan {
+	font-size: 10px;
+	color: tomato !important;
+}
+
+.error {
+	border-bottom: 1px solid tomato;
+	color: tomato !important;
+}
