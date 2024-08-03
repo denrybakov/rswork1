@@ -16,9 +16,10 @@ export const MyForm = () => {
     emtyForm
   } = getStore()
 
-  let isValid = email && password && passwordRepeat && password === passwordRepeat && !emailErrors.parseEmail &&
-    !emailErrors.minSym && !emailErrors.maxSym && !passwordErrors.parsePass &&
-    !passwordErrors.minSym && !passwordErrors.maxSym && !passwordRepeatErrors.passwordsErr
+  let isValid = email && password && passwordRepeat && password === passwordRepeat &&
+    !emailErrors.parseEmail && !emailErrors.minSym && !emailErrors.maxSym &&
+    !passwordErrors.parsePass && !passwordErrors.minSym &&
+    !passwordErrors.maxSym && !passwordRepeatErrors.passwordsErr
 
   useEffect(() => {
     if (isValid) {
@@ -77,11 +78,9 @@ export const MyForm = () => {
   }
 
   const onBlurPasswordRepeatInput = () => {
-    if (passwordRepeat !== password) {
-      setStore('passwordRepeatErrors', { passwordsErr: 'Пароли не совпадают' })
-    } else {
-      setStore('passwordRepeatErrors', {})
-    }
+    passwordRepeat !== password
+      ? setStore('passwordRepeatErrors', { passwordsErr: 'Пароли не совпадают' })
+      : setStore('passwordRepeatErrors', {})
   }
 
   return (
@@ -97,9 +96,15 @@ export const MyForm = () => {
         onChange={({ target }) => setStore(target.name, target.value)}
         onBlur={({ target }) => onBlurEmailInput(target.value)}
       />
-      {email && emailErrors.parseEmail && <span className={styles.errorSpan}>{emailErrors.parseEmail}</span>}
-      {email && emailErrors.minSym && <span className={styles.errorSpan}>{emailErrors.minSym}</span>}
-      {email && emailErrors.maxSym && <span className={styles.errorSpan}>{emailErrors.maxSym}</span>}
+      {email && emailErrors.parseEmail &&
+        <span className={styles.errorSpan}>{emailErrors.parseEmail}</span>}
+
+      {email && emailErrors.minSym &&
+        <span className={styles.errorSpan}>{emailErrors.minSym}</span>}
+
+      {email && emailErrors.maxSym &&
+        <span className={styles.errorSpan}>{emailErrors.maxSym}</span>}
+
 
       <input
         type="password"
@@ -110,9 +115,14 @@ export const MyForm = () => {
         onChange={({ target }) => setStore(target.name, target.value)}
         onBlur={({ target }) => onBlurPasswordInput(target.value)}
       />
-      {password && passwordErrors.parsePass && <span className={styles.errorSpan}>{passwordErrors.parsePass}</span>}
-      {password && passwordErrors.minSym && <span className={styles.errorSpan}>{passwordErrors.minSym}</span>}
-      {password && passwordErrors.maxSym && <span className={styles.errorSpan}>{passwordErrors.maxSym}</span>}
+      {password && passwordErrors.parsePass &&
+        <span className={styles.errorSpan}>{passwordErrors.parsePass}</span>}
+
+      {password && passwordErrors.minSym &&
+        <span className={styles.errorSpan}>{passwordErrors.minSym}</span>}
+
+      {password && passwordErrors.maxSym &&
+        <span className={styles.errorSpan}>{passwordErrors.maxSym}</span>}
 
       <input
         type="password"
@@ -123,7 +133,8 @@ export const MyForm = () => {
         onChange={({ target }) => setStore(target.name, target.value)}
         onBlur={onBlurPasswordRepeatInput}
       />
-      {passwordRepeat && passwordRepeatErrors.passwordsErr && <span className={styles.errorSpan}>{'Не совпадают пароли'}</span>}
+      {passwordRepeat && passwordRepeatErrors.passwordsErr &&
+        <span className={styles.errorSpan}>{'Не совпадают пароли'}</span>}
 
       <button type="submit" ref={refBtn} disabled={!isValid} >Зарегистрироваться</button>
       {emtyForm && <div className={styles.errorForm}>Форма пустая </div>}
