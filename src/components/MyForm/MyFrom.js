@@ -1,4 +1,4 @@
-import { useRef } from 'react'
+import { useEffect, useRef } from 'react'
 import { useStore } from '../../store/store'
 import { isValidEmail, isValidPass } from '../helper'
 import styles from './MyForm.module.css'
@@ -19,6 +19,14 @@ export const MyForm = () => {
   let isValid = email && password && passwordRepeat && !emailErrors.parseEmail &&
     !emailErrors.minSym && !emailErrors.maxSym && !passwordErrors.parsePass &&
     !passwordErrors.minSym && !passwordErrors.maxSym && !passwordRepeatErrors.passwordsErr
+
+  useEffect(() => {
+    if (isValid) {
+      refBtn.current.focus();
+
+    }
+  }, [isValid])
+
 
   const sendFormData = (dataForm) => {
     console.log(dataForm);
@@ -67,8 +75,6 @@ export const MyForm = () => {
     password !== passwordRepeat
       ? setStore('passwordRepeatErrors', { passwordsErr: 'Пароли не совпадают' })
       : setStore('passwordRepeatErrors', {})
-
-
   }
 
   const onChangeRepeatPass = (inputValue) => {
@@ -88,7 +94,6 @@ export const MyForm = () => {
       setStore('passwordRepeatErrors', { passwordsErr: 'Пароли не совпадают' })
     } else {
       setStore('passwordRepeatErrors', {})
-      refBtn.current.focus();
     }
 
 
